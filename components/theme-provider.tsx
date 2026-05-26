@@ -1,7 +1,7 @@
 "use client"
 
-import * as React from "react"
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes"
+import * as React from "react"
 
 function ThemeProvider({
   children,
@@ -15,7 +15,7 @@ function ThemeProvider({
       disableTransitionOnChange
       {...props}
     >
-      <ThemeHotkey />
+      {/*<ThemeHotkey /> <- Uncomment to enable theme hotkey */}
       {children}
     </NextThemesProvider>
   )
@@ -34,26 +34,19 @@ function isTypingTarget(target: EventTarget | null) {
   )
 }
 
-function ThemeHotkey() {
+// Define a hotkey for toggling the theme (e.g., Ctrl + D or Cmd + D)
+export function ThemeHotkey() {
   const { resolvedTheme, setTheme } = useTheme()
 
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (event.defaultPrevented || event.repeat) {
-        return
-      }
+      if (event.defaultPrevented || event.repeat) return
 
-      if (event.metaKey || event.ctrlKey || event.altKey) {
-        return
-      }
+      if (event.metaKey || event.ctrlKey || event.altKey) return
 
-      if (event.key.toLowerCase() !== "d") {
-        return
-      }
+      if (event.key.toLowerCase() !== "d") return
 
-      if (isTypingTarget(event.target)) {
-        return
-      }
+      if (isTypingTarget(event.target)) return
 
       setTheme(resolvedTheme === "dark" ? "light" : "dark")
     }
