@@ -35,8 +35,8 @@ A production-ready Next.js starter kit for new projects. Clone it or use it as a
 2. Clone your new repo and install dependencies:
 
 ```bash
-git clone git@github.com:your-org/your-project.git
-cd your-project
+git clone git@github.com:jj0han/starter-next.git
+cd starter-next
 pnpm install
 ```
 
@@ -175,6 +175,33 @@ Components live in `components/ui/` and are configured via `components.json`:
 - **Base color:** zinc
 - **Icon library:** hugeicons
 - **RSC:** enabled
+
+### Custom styles
+
+Don't want the default look? Design your theme at [ui.shadcn.com/create](https://ui.shadcn.com/create) — pick the style, base color, radius, fonts, icon library, and other options in the visual editor. When you're done, copy the CLI command from the create page and run it in this project.
+
+The create page offers three ways to apply a preset to an existing project:
+
+| Option | What it updates | CLI |
+| --- | --- | --- |
+| **Full preset** | Theme tokens, fonts, `components.json`, and all detected UI components | `npx shadcn@latest apply <preset>` |
+| **Theme only** | CSS variables in `app/globals.css` and related theme config — components stay as-is | `npx shadcn@latest apply <preset> --only theme` |
+| **Fonts only** | Font setup in the layout — everything else stays as-is | `npx shadcn@latest apply <preset> --only font` |
+
+You can also combine partial options, e.g. `--only theme,font`. Use the exact preset code or command shown on the create page.
+
+No need to re-run `init` or reinstall components when you only want a new theme or fonts — that's what the `--only` flag is for. Choose **full preset** only when you want every installed component restyled to match.
+
+### Icons
+
+This template ships with [Hugeicons](https://hugeicons.com). Icon library changes are **not** part of partial preset apply — shadcn only supports `--only theme` and `--only font`, not icons. Switching icon packages in [ui.shadcn.com/create](https://ui.shadcn.com/create) or in `components.json` also does **not** retroactively update icons already in the codebase.
+
+If you change icon libraries, you'll need to manually update icon imports and usage in:
+
+- `components/ui/*` — every pre-installed component that references icons
+- Your own components — e.g. `components/welcome-card.tsx`
+
+New components added via `npx shadcn@latest add` will use the configured library; everything already installed is on you.
 
 ### Adding more components
 

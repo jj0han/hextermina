@@ -8,10 +8,11 @@ import {
 } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { useQuery } from "@tanstack/react-query"
+import Link from "next/link"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Item,
@@ -26,6 +27,7 @@ import {
   TypographyH1,
   TypographyInlineCode,
   TypographyLead,
+  TypographyMuted,
   TypographyP,
 } from "@/components/ui/typography"
 import { useTRPC } from "@/trpc/client"
@@ -88,7 +90,7 @@ export function WelcomeCard() {
               </ItemDescription>
             </ItemContent>
             <ItemActions>
-              <Button size="icon" variant="secondary" onClick={toggleTheme}>
+              <Button size="icon" onClick={toggleTheme}>
                 <HugeiconsIcon
                   icon={theme === "dark" ? Sun01Icon : Moon02Icon}
                   strokeWidth={2}
@@ -105,12 +107,17 @@ export function WelcomeCard() {
               <ItemDescription>Learn how to get started.</ItemDescription>
             </ItemContent>
             <ItemActions>
-              <Button size="icon" variant="secondary">
+              <Link
+                href="https://github.com/jj0han/starter-next"
+                target="_blank"
+                className={buttonVariants({ size: "icon" })}
+              >
                 <HugeiconsIcon icon={ExternalLink} strokeWidth={2} />
-              </Button>
+              </Link>
             </ItemActions>
           </Item>
         </ItemGroup>
+        <TypographyMuted>Made by jj0han</TypographyMuted>
       </div>
     </div>
   )
