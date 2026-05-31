@@ -7,6 +7,7 @@ import {
   Moon02Icon,
   PaintBrush04Icon,
   Refresh03Icon,
+  ShadcnIcon,
   Sun01Icon,
 } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
@@ -57,7 +58,7 @@ export function WelcomeCard() {
   }
 
   return (
-    <div className="flex min-h-svh items-center justify-center bg-background p-6">
+    <main className="flex min-h-svh items-center justify-center bg-background p-6">
       <div className="w-full max-w-xl space-y-8">
         <div className="w-full space-y-6">
           <TypographyH1>Project ready!</TypographyH1>
@@ -77,7 +78,12 @@ export function WelcomeCard() {
                 </ItemDescription>
               </ItemContent>
               <ItemActions>
-                <Button size="icon" onClick={toggleTheme}>
+                <Button
+                  size="icon"
+                  onClick={toggleTheme}
+                  title="Toggle light/dark mode"
+                  role="listitem"
+                >
                   <HugeiconsIcon
                     icon={theme === "dark" ? Sun01Icon : Moon02Icon}
                     strokeWidth={2}
@@ -97,6 +103,30 @@ export function WelcomeCard() {
                 <Link
                   href="https://github.com/jj0han/starter-next"
                   target="_blank"
+                  aria-label="Visit the github page"
+                  role="listitem"
+                  className={buttonVariants({ size: "icon" })}
+                >
+                  <HugeiconsIcon icon={ExternalLink} strokeWidth={2} />
+                </Link>
+              </ItemActions>
+            </Item>
+            <Item variant="outline">
+              <ItemMedia variant="icon">
+                <HugeiconsIcon icon={ShadcnIcon} strokeWidth={2} />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>Shadcn/ui</ItemTitle>
+                <ItemDescription>
+                  Build your own design system and apply on this template.
+                </ItemDescription>
+              </ItemContent>
+              <ItemActions>
+                <Link
+                  href="https://ui.shadcn.com"
+                  target="_blank"
+                  aria-label="Visit the documentation for Shadcn/ui"
+                  role="listitem"
                   className={buttonVariants({ size: "icon" })}
                 >
                   <HugeiconsIcon icon={ExternalLink} strokeWidth={2} />
@@ -109,6 +139,9 @@ export function WelcomeCard() {
           <ItemMedia variant="image">
             <HugeiconsIcon
               icon={status === "success" ? CheckCircle : CancelCircleIcon}
+              className={
+                status === "success" ? "text-green-600" : "text-destructive"
+              }
               strokeWidth={2}
             />
           </ItemMedia>
@@ -117,7 +150,11 @@ export function WelcomeCard() {
             <ItemDescription>data: {data?.greeting}</ItemDescription>
           </ItemContent>
           <ItemActions>
-            <Button onClick={async () => await refetch()} size="icon">
+            <Button
+              title="Refetch query test"
+              onClick={async () => await refetch()}
+              size="icon"
+            >
               {isRefetching ? (
                 <Spinner />
               ) : (
@@ -137,6 +174,6 @@ export function WelcomeCard() {
           </Link>
         </TypographyMuted>
       </div>
-    </div>
+    </main>
   )
 }

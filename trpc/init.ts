@@ -26,3 +26,25 @@ const t = initTRPC
 export const createTRPCRouter = t.router
 export const createCallerFactory = t.createCallerFactory
 export const baseProcedure = t.procedure
+
+/**
+ * Protected (authenticated) procedure
+ * @see https://trpc.io/docs/procedures
+
+  Example:
+
+  const userIsAuthed = t.middleware(async ({ ctx, next }) => {
+    if (!ctx.session) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+
+    return next({
+      ctx: {
+        // infers the `session` as non-nullable
+        session: { ...ctx.session },
+      },
+    });
+  });
+
+  export const authedProcedure = t.procedure.use(userIsAuthed);
+*/

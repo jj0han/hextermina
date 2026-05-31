@@ -1,5 +1,6 @@
 import "./globals.css"
 
+import type { Metadata } from "next"
 import { Geist, Geist_Mono, Inter } from "next/font/google"
 
 import { cn } from "@/lib/utils"
@@ -18,6 +19,11 @@ const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+
+export const metadata: Metadata = {
+  title: "Starter Next",
+  description: "By jj0han",
+}
 
 export default function RootLayout({
   children,
