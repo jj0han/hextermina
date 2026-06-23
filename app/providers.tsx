@@ -46,10 +46,12 @@ function MorphingCursor() {
     hover: cursorPath,
   }
 
+  const isClickCursor = hoveringElement === "button" || hoveringElement === "a"
+
   return (
     <motion.div
       animate={
-        hoveringElement === "button"
+        isClickCursor && !isHovering
           ? "hover"
           : isHovering
             ? "tooltip"
@@ -61,7 +63,7 @@ function MorphingCursor() {
         tooltip: { clipPath: cursor.tooltip, width: 80, height: 32 },
       }}
       transition={{ type: "spring", stiffness: 500, damping: 35 }}
-      className="flex items-center justify-center rounded-lg bg-primary/40 backdrop-blur-md"
+      className="flex items-center justify-center rounded-full bg-primary/40 backdrop-blur-md"
     >
       <AnimatePresence>{isHovering && cursorContent}</AnimatePresence>
     </motion.div>
