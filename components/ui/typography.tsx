@@ -9,7 +9,7 @@ export function TypographyH1({ children, className }: TypographyProps) {
   return (
     <h1
       className={cn(
-        "scroll-m-20 font-heading text-4xl font-extrabold tracking-tight text-balance",
+        "scroll-m-20 font-heading text-4xl font-semibold tracking-tight text-balance md:text-7xl",
         className
       )}
     >
@@ -22,7 +22,7 @@ export function TypographyH2({ children, className }: TypographyProps) {
   return (
     <h2
       className={cn(
-        "scroll-m-20 font-heading text-3xl font-semibold tracking-tight",
+        "scroll-m-20 font-heading text-3xl font-semibold tracking-tight md:text-6xl",
         className
       )}
     >
@@ -35,7 +35,7 @@ export function TypographyH3({ children, className }: TypographyProps) {
   return (
     <h3
       className={cn(
-        "scroll-m-20 font-heading text-2xl font-semibold tracking-tight",
+        "scroll-m-20 font-heading text-2xl font-semibold tracking-tight md:text-xl",
         className
       )}
     >
@@ -48,7 +48,7 @@ export function TypographyH4({ children, className }: TypographyProps) {
   return (
     <h4
       className={cn(
-        "scroll-m-20 font-heading text-xl font-semibold tracking-tight",
+        "scroll-m-20 font-heading text-xl font-semibold tracking-tight md:text-lg",
         className
       )}
     >

@@ -1,18 +1,18 @@
 import "./globals.css"
 
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Inter } from "next/font/google"
+import { Geist_Mono, Inter, Oxanium } from "next/font/google"
 
 import { cn } from "@/lib/utils"
 import { TRPCReactProvider } from "@/trpc/client"
 
 import Providers from "./providers"
 
-const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" })
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
-const fontHeading = Geist({
-  variable: "--font-heading",
+const oxaniumHeading = Oxanium({
   subsets: ["latin"],
+  variable: "--font-heading",
 })
 
 const fontMono = Geist_Mono({
@@ -21,8 +21,8 @@ const fontMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Starter Next",
-  description: "By jj0han",
+  title: "Hex Termina",
+  description: "Divine Dogma",
 }
 
 export default function RootLayout({
@@ -36,10 +36,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn(
         "antialiased",
-        fontHeading.variable,
+        oxaniumHeading.variable,
         fontMono.variable,
         "font-sans",
-        fontSans.variable
+        inter.variable
       )}
     >
       <body>
