@@ -15,6 +15,7 @@ type CursorTarget = {
 }
 
 type CursorContextProps = {
+  isIdle: boolean
   isHovering: boolean
   hoveringElement: string | undefined
   cursorContent: ReactNode | null
@@ -34,6 +35,7 @@ export function CursorProvider({ children }: { children: ReactNode }) {
   const activeTargetIdRef = useRef<string | null>(null)
   const targetsRef = useRef(new Map<string, CursorTarget>())
   const [isHovering, setIsHovering] = useState(false)
+  const [isIdle, setIsIdle] = useState(true)
   const [hoveringElement, setHoveringElement] = useState<string | undefined>()
   const [cursorContent, setCursorContent] = useState<ReactNode | null>(null)
 
@@ -112,22 +114,34 @@ export function CursorProvider({ children }: { children: ReactNode }) {
   )
 
   useEffect(() => {
-    //eslint-disable-next-line
-    function handleCursorMove(event: any) {
+    let timeout: NodeJS.Timeout
+
+    function handleCursorMove(event: MouseEvent) {
       const x = event.clientX
       const y = event.clientY
 
       const element = document.elementFromPoint(x, y)
       setHoveringElement(element?.tagName.toLowerCase())
+
+      setIsIdle(false)
+
+      clearTimeout(timeout)
+      timeout = setTimeout(() => {
+        setIsIdle(true)
+      }, 1000)
     }
 
     window.addEventListener("pointermove", handleCursorMove)
-    return () => window.removeEventListener("pointermove", handleCursorMove)
+    return () => {
+      window.removeEventListener("pointermove", handleCursorMove)
+      clearTimeout(timeout)
+    }
   }, [])
 
   return (
     <CursorContext.Provider
       value={{
+        isIdle,
         isHovering,
         hoveringElement,
         cursorContent,

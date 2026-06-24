@@ -38,9 +38,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 }
 
 function MorphingCursor() {
-  const { isHovering, hoveringElement, cursorContent } = useCursor()
+  const { isIdle, isHovering, hoveringElement, cursorContent } = useCursor()
 
   const cursor = {
+    rest: "circle(0% at 0% 0%)",
     default: "circle(50% at 50% 50%)",
     tooltip: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
     hover: cursorPath,
@@ -51,13 +52,16 @@ function MorphingCursor() {
   return (
     <motion.div
       animate={
-        isClickCursor && !isHovering
-          ? "hover"
-          : isHovering
-            ? "tooltip"
-            : "default"
+        isIdle && !isHovering
+          ? "rest"
+          : isClickCursor && !isHovering
+            ? "hover"
+            : isHovering
+              ? "tooltip"
+              : "default"
       }
       variants={{
+        rest: { width: 0, height: 0 },
         default: { clipPath: cursor.default, width: 16, height: 16 },
         hover: { clipPath: cursor.hover, width: 16, height: 16 },
         tooltip: { clipPath: cursor.tooltip, width: 80, height: 32 },
