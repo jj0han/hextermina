@@ -1,9 +1,15 @@
 "use client"
 
-import { Volume, VolumeMute02Icon } from "@hugeicons/core-free-icons"
+import {
+  Moon02Icon,
+  Sun02Icon,
+  Volume,
+  VolumeMute02Icon,
+} from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 
 import { useAudio } from "@/context/audio-provider"
+import { useThemeToggle } from "@/context/theme-provider"
 
 import { Button, buttonVariants } from "./ui/button"
 import { ButtonGroup } from "./ui/button-group"
@@ -12,9 +18,26 @@ import { Slider } from "./ui/slider"
 export function AudioControls() {
   const { volume, handleVolume, isMuted, playClickSound, playBackgroundSound } =
     useAudio()
+  const { isDark, toggleTheme } = useThemeToggle({ variant: "polygon" })
 
   return (
-    <div className="absolute top-4 right-4">
+    <ButtonGroup className="absolute top-4 right-4 flex gap-2">
+      <ButtonGroup>
+        <Button
+          size="icon"
+          variant="secondary"
+          onClick={(e) => {
+            e.stopPropagation()
+            toggleTheme()
+            // setTheme(theme === "dark" ? "light" : "dark")
+          }}
+        >
+          <HugeiconsIcon
+            icon={isDark ? Sun02Icon : Moon02Icon}
+            strokeWidth={2}
+          />
+        </Button>
+      </ButtonGroup>
       <ButtonGroup onClick={(e) => e.stopPropagation()}>
         <Button
           size="icon"
@@ -48,6 +71,6 @@ export function AudioControls() {
           })}
         />
       </ButtonGroup>
-    </div>
+    </ButtonGroup>
   )
 }

@@ -61,7 +61,7 @@ function MorphingCursor() {
               : "default"
       }
       variants={{
-        rest: { width: 0, height: 0 },
+        rest: { clipPath: cursor.rest, width: 0, height: 0 },
         default: { clipPath: cursor.default, width: 16, height: 16 },
         hover: { clipPath: cursor.hover, width: 16, height: 16 },
         tooltip: { clipPath: cursor.tooltip, width: 80, height: 32 },
