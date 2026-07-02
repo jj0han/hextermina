@@ -13,9 +13,10 @@ import { useThemeToggle } from "@/context/theme-provider"
 
 import { Button, buttonVariants } from "./ui/button"
 import { ButtonGroup } from "./ui/button-group"
+import { Label } from "./ui/label"
 import { Slider } from "./ui/slider"
 
-export function AudioControls() {
+export function Controls() {
   const { volume, handleVolume, isMuted, playClickSound, playBackgroundSound } =
     useAudio()
   const { isDark, toggleTheme } = useThemeToggle({ variant: "polygon" })
@@ -24,6 +25,7 @@ export function AudioControls() {
     <ButtonGroup className="absolute top-4 right-4 flex gap-2">
       <ButtonGroup>
         <Button
+          title="Toggle theme"
           size="icon"
           variant="secondary"
           onClick={(e) => {
@@ -40,6 +42,7 @@ export function AudioControls() {
       </ButtonGroup>
       <ButtonGroup onClick={(e) => e.stopPropagation()}>
         <Button
+          title="Toggle mute"
           size="icon"
           variant="secondary"
           onClick={(e) => {
@@ -56,7 +59,11 @@ export function AudioControls() {
             strokeWidth={2}
           />
         </Button>
+        <Label id="volume-label" className="sr-only">
+          Volume
+        </Label>
         <Slider
+          aria-labelledby="volume-label"
           disabled={isMuted}
           defaultValue={volume}
           value={volume}

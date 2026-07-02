@@ -8,6 +8,7 @@ import { useMemo } from "react"
 
 import { useCursorHover } from "@/context/cursor-provider"
 
+import { TextScramble } from "./motion-primitives/text-scramble"
 import { buttonVariants } from "./ui/button"
 import { TypographyH1, TypographyLead, TypographyMuted } from "./ui/typography"
 
@@ -32,7 +33,9 @@ export function MainExperience({ shouldReduceMotion }: MainExperienceProps) {
       className="mx-auto flex w-full max-w-4xl flex-col gap-8"
     >
       <TypographyMuted className="font-mono text-xs tracking-[0.4em] uppercase">
-        Hextermina / drop 001
+        <TextScramble as="label" duration={2}>
+          Hextermina / drop 001
+        </TextScramble>
       </TypographyMuted>
       <div className="space-y-4" ref={cursorRef}>
         <TypographyH1>

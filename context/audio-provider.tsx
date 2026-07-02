@@ -69,7 +69,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       <audio ref={audioRef} src={"/sounds/intro-sound.ogg"} preload="auto" />
       <audio
         ref={bgAudioRef}
-        src={"/sounds/background-sound.mp3"}
+        src={"/sounds/background-sound.ogg"}
         preload="auto"
         loop
       />

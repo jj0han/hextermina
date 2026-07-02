@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useAudio } from "@/context/audio-provider"
 import { useLocalStorageState } from "@/context/local-storage-provider"
 
-import { AudioControls } from "./audio-controls"
+import { Controls } from "./controls"
 import { HeadphonesNotice } from "./headphones-notice"
 import { Landing } from "./landing"
 import { MainExperience } from "./main-experience"
@@ -54,7 +54,7 @@ export function WelcomeCard() {
       className="flex min-h-svh items-center justify-center overflow-hidden bg-background p-6"
       onClick={startEnterAnimation}
     >
-      <AudioControls />
+      <Controls />
       <AnimatePresence mode="wait">
         {experienceState === "main" ? (
           <MainExperience
