@@ -66,36 +66,40 @@ export function MainExperience({ shouldReduceMotion }: MainExperienceProps) {
   })
 
   return (
-    <>
+    <div className="flex overflow-hidden">
       <ShurikenBackdrop shouldReduceMotion={shouldReduceMotion} />
-      <ButtonGroup
-        orientation={"vertical"}
-        className="fixed top-1/2 right-4 z-40 flex translate-y-[-50%] flex-col"
+      <div
+        ref={scrollRef as React.RefObject<HTMLDivElement>}
+        className="no-scrollbar min-w-0 scrollbar-none overflow-x-hidden overflow-y-scroll"
       >
-        <Button size={"icon"} variant={"secondary"} onClick={previousSection}>
-          <HugeiconsIcon icon={ChevronUp} strokeWidth={2} />
-        </Button>
-        <Button size={"icon"} variant={"secondary"} onClick={nextSection}>
-          <HugeiconsIcon icon={ChevronDown} strokeWidth={2} />
-        </Button>
-      </ButtonGroup>
-      <div data-lenis-content className="w-full min-w-0">
-        {MAIN_SECTIONS.map((section, index) => (
-          <MainSection
-            key={section.eyebrow}
-            index={index}
-            section={section}
+        <div data-lenis-content>
+          {MAIN_SECTIONS.map((section, index) => (
+            <MainSection
+              key={section.eyebrow}
+              index={index}
+              section={section}
+              scrollProgress={scrollProgress}
+              shouldReduceMotion={shouldReduceMotion}
+            />
+          ))}
+          <GithubSection
+            index={2}
             scrollProgress={scrollProgress}
             shouldReduceMotion={shouldReduceMotion}
           />
-        ))}
-        <GithubSection
-          index={2}
-          scrollProgress={scrollProgress}
-          shouldReduceMotion={shouldReduceMotion}
-        />
+        </div>
       </div>
-    </>
+      <div className="self-center p-4">
+        <ButtonGroup orientation={"vertical"} className="self-center">
+          <Button size={"icon"} variant={"secondary"} onClick={previousSection}>
+            <HugeiconsIcon icon={ChevronUp} strokeWidth={2} />
+          </Button>
+          <Button size={"icon"} variant={"secondary"} onClick={nextSection}>
+            <HugeiconsIcon icon={ChevronDown} strokeWidth={2} />
+          </Button>
+        </ButtonGroup>
+      </div>
+    </div>
   )
 }
 
@@ -117,7 +121,7 @@ function ShurikenBackdrop({
   return (
     <motion.div
       style={{ rotate: shouldReduceMotion ? 0 : smoothRotate }}
-      className="pointer-events-none fixed inset-0 -left-1/2 z-0 w-full overflow-hidden"
+      className="pointer-events-none h-full w-1/2 max-w-2xl"
       aria-hidden
     >
       <Image
@@ -187,7 +191,7 @@ function MainSection({
           opacity,
           filter: useMotionTemplate`blur(${smoothBlur}px)`,
         }}
-        className="ml-auto flex w-full max-w-6xl min-w-0 flex-col gap-8 p-4 md:pr-[clamp(1.5rem,8vw,4rem)]"
+        className="flex w-full max-w-6xl min-w-0 flex-col gap-8 p-4"
       >
         <TypographyMuted className="font-mono text-xs tracking-[0.4em] uppercase">
           <TextScramble as="label" duration={1.5}>

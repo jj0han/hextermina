@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react"
 import { useAudio } from "@/context/audio-provider"
 import { useLenis, useLenisActivation } from "@/context/lenis-provider"
 import { useLocalStorageState } from "@/context/local-storage-provider"
-import { useScrollContainer } from "@/context/scroll-container-provider"
 import { cn } from "@/lib/utils"
 
 import { Controls } from "./controls"
@@ -17,7 +16,7 @@ import { OnBoarding } from "./on-boarding"
 export function WelcomeCard() {
   const [mounted, setMounted] = useState(false)
   const shouldReduceMotion = useReducedMotion()
-  const { scrollRef } = useScrollContainer()
+
   const { scrollTo } = useLenis()
 
   const { handleVolume, playClickSound, playBackgroundSound } = useAudio()
@@ -62,12 +61,9 @@ export function WelcomeCard() {
 
   return (
     <main
-      ref={scrollRef}
       className={cn(
         "flex h-svh justify-center bg-background",
-        showMainLayout
-          ? "scrollbar-none overflow-x-hidden overflow-y-scroll"
-          : "items-center overflow-hidden p-6"
+        showMainLayout ? "" : "items-center overflow-hidden p-6"
       )}
       onClick={startEnterAnimation}
     >
