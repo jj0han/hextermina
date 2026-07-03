@@ -5,7 +5,9 @@ import { Cursor } from "@/components/motion-primitives/cursor"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { AudioProvider } from "@/context/audio-provider"
 import { CursorProvider, useCursor } from "@/context/cursor-provider"
+import { LenisProvider } from "@/context/lenis-provider"
 import { LocalStorageProvider } from "@/context/local-storage-provider"
+import { ScrollContainerProvider } from "@/context/scroll-container-provider"
 import { ThemeProvider } from "@/context/theme-provider"
 import { cursorPath } from "@/utils/clipPaths"
 
@@ -14,23 +16,42 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <LocalStorageProvider>
         <AudioProvider>
-          <CursorProvider>
-            <Cursor
-              variants={{
-                initial: { scale: 0.3, opacity: 0 },
-                animate: { scale: 1, opacity: 1 },
-                exit: { scale: 0.3, opacity: 0 },
+          <ScrollContainerProvider>
+            <LenisProvider
+              lenisOptions={{
+                duration: 1.4,
+                smoothWheel: true,
+                // omit lerp if you want duration to drive snapping
               }}
-              transition={{
-                ease: "easeInOut",
-                duration: 0.15,
+              snapOptions={{
+                type: "mandatory",
+                duration: 1.4,
+                debounce: 150,
               }}
-              springConfig={{ damping: 25, stiffness: 300, restDelta: 0.001 }}
             >
-              <MorphingCursor />
-            </Cursor>
-            <TooltipProvider>{children}</TooltipProvider>
-          </CursorProvider>
+              <CursorProvider>
+                <Cursor
+                  variants={{
+                    initial: { scale: 0.3, opacity: 0 },
+                    animate: { scale: 1, opacity: 1 },
+                    exit: { scale: 0.3, opacity: 0 },
+                  }}
+                  transition={{
+                    ease: "easeInOut",
+                    duration: 0.15,
+                  }}
+                  springConfig={{
+                    damping: 25,
+                    stiffness: 300,
+                    restDelta: 0.001,
+                  }}
+                >
+                  <MorphingCursor />
+                </Cursor>
+                <TooltipProvider>{children}</TooltipProvider>
+              </CursorProvider>
+            </LenisProvider>
+          </ScrollContainerProvider>
         </AudioProvider>
       </LocalStorageProvider>
     </ThemeProvider>

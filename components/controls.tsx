@@ -22,7 +22,7 @@ export function Controls() {
   const { isDark, toggleTheme } = useThemeToggle({ variant: "polygon" })
 
   return (
-    <ButtonGroup className="absolute top-4 right-4 flex gap-2">
+    <ButtonGroup className="pointer-events-auto fixed top-4 right-4 z-40 flex gap-2">
       <ButtonGroup>
         <Button
           title="Toggle theme"
@@ -31,7 +31,6 @@ export function Controls() {
           onClick={(e) => {
             e.stopPropagation()
             toggleTheme()
-            // setTheme(theme === "dark" ? "light" : "dark")
           }}
         >
           <HugeiconsIcon
