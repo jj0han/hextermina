@@ -165,7 +165,6 @@ export function readLocalStorageItem(key: string) {
   try {
     return localStorage.getItem(key)
   } catch {
-    // Storage can fail in private mode or when quota is exceeded.
     return null
   }
 }
@@ -175,7 +174,6 @@ export function writeLocalStorageItem(key: string, value: string) {
   try {
     localStorage.setItem(key, value)
   } catch {
-    // Storage can fail in private mode or when quota is exceeded.
     return null
   }
 }

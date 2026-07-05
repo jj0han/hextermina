@@ -200,7 +200,6 @@ export function LenisProvider({
       nextSection,
       previousSection,
     }),
-    // isReady is the signal that lenis/snap exist; refs update with it
     [isReady, setEnabled, scrollTo, goToSection, nextSection, previousSection]
   )
 
@@ -217,9 +216,7 @@ export function useLenis() {
   return context
 }
 
-/**
- * Call this from WelcomeCard (or any page) to turn Lenis on/off.
- */
+// Call this from any page to turn Lenis on/off.
 export function useLenisActivation(enabled: boolean) {
   const { setEnabled } = useLenis()
 

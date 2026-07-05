@@ -38,7 +38,6 @@ export function WelcomeCard() {
   const isEntering = experienceState === "entering"
   const showMainLayout = mounted && isMain
 
-  // Turn Lenis on only in the main scroll experience
   useLenisActivation(showMainLayout && !shouldReduceMotion)
 
   useEffect(() => {

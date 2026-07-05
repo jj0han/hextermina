@@ -34,7 +34,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const [volume, setVolume] = useState(0)
   const [isMuted, setIsMuted] = useState(true)
   const isMuteLockedByDefault =
-    readLocalStorageItem(STORAGE_KEYS.isMuted) === "true" // track muted state in local storage
+    readLocalStorageItem(STORAGE_KEYS.isMuted) === "true" // Track muted state in local storage
 
   function playBackgroundSound() {
     if (!bgAudioRef.current) return
