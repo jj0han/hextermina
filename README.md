@@ -1,4 +1,6 @@
-# Hextermina
+![Hypecult](./public/hex-logo.svg)
+
+---
 
 Fanmade concept website for [Hextermina](https://hextermina.com) — a dark Y2K indie clothing brand. This project is a non-commercial, creative reinterpretation of the brand’s digital presence. It is not affiliated with, endorsed by, or intended for commercial use by the original brand.
 
