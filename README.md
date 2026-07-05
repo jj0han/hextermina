@@ -6,47 +6,26 @@ Fanmade concept website for [Hextermina](https://hextermina.com) — a dark Y2K 
 
 ## About
 
-Hextermina sits at the intersection of underground streetwear and early-internet aesthetics: chrome logos, gate imagery, limited-run drops, and an immersive single-page entry sequence. The site prioritizes atmosphere — sound, motion, and a custom cursor — over traditional e-commerce patterns.
+Hextermina sits at the intersection of underground streetwear and early-internet aesthetics: chrome logos, gate imagery, limited-run drops, and a single-page entry sequence. The site prioritizes atmosphere — sound, motion, and scroll — over traditional e-commerce patterns.
+
+After the intro flow, the main experience is a full-viewport, section-snapped scroll surface built with Lenis: each drop block fills the screen, with parallax chrome accents and scrambled text reveals on scroll.
 
 **Brand tone:** cryptic, dark, indie. Copy leans into “the end,” chrome-era pieces, and small-batch exclusivity.
-
-## Experience flow
-
-The home page is a single URL with no route changes. Progress is orchestrated by `WelcomeCard` and persisted where noted:
-
-| Step | Component | Persistence |
-| --- | --- | --- |
-| 1. Headphones notice | `HeadphonesNotice` | Once per **session** (`sessionStorage`) |
-| 2. Onboarding / terms | `OnBoarding` | Once ever after agreeing (`localStorage`) |
-| 3. Landing / gate | `Landing` | Once per **session**; includes LiquidMetal logo + gate animation |
-| 4. Main content | `MainExperience` | Remains for the current **session** after entering |
-
-**Landing animation:** clicking “Press anywhere to Start” triggers a blurry fade-out of the chrome logo, then the gate images zoom, open in 3D, and fade away before revealing the main page.
-
-**Reduced motion:** users with `prefers-reduced-motion` skip the gate sequence and go straight to `MainExperience`.
 
 ## What's included
 
 | Layer | Stack |
 | --- | --- |
 | Framework | [Next.js 16](https://nextjs.org) (App Router, RSC, Turbopack) |
-| UI | [shadcn/ui](https://ui.shadcn.com) (`base-luma`, zinc palette) |
+| UI | [React 19](https://react.dev) + [shadcn/ui v4](https://ui.shadcn.com) (`base-luma`, neutral palette, [@base-ui/react](https://base-ui.com)) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com) |
-| Motion | [Motion](https://motion.dev) (Framer Motion successor) |
+| Motion | [Motion](https://motion.dev) |
+| Scroll | [Lenis](https://lenis.darkroom.engineering) |
 | Shaders | [@paper-design/shaders-react](https://github.com/paper-design/shaders) (`LiquidMetal` logo) |
 | Icons | [Hugeicons](https://hugeicons.com) |
 | API | [tRPC v11](https://trpc.io) + [TanStack Query v5](https://tanstack.com/query) |
 | Theming | [next-themes](https://github.com/pacocoursey/next-themes) (light / dark / system) |
 | Language | TypeScript (strict) |
-
-### Project-specific features
-
-- **Immersive entry** — headphones prompt, terms card, animated gate transition
-- **Custom morphing cursor** — dot, pointer, and tooltip shapes via `clip-path` (`components/motion-primitives/cursor.tsx`)
-- **Ambient audio** — intro click + looping background (`public/sounds/`), volume controls in `AudioControls`
-- **Chrome logo** — `LiquidMetal` shader over `hex-logo.svg`
-- **Persistence** — onboarding completion in `localStorage`; session flow in `sessionStorage` (`context/local-storage-provider.tsx`)
-- **Dark-first typography** — Inter (body), Oxanium (headings), Geist Mono (code/mono accents)
 
 ## Getting started
 
@@ -76,31 +55,38 @@ Open [http://localhost:3000](http://localhost:3000). Use headphones and enable s
 hextermina/
 ├── app/
 │   ├── api/trpc/[trpc]/route.ts   # tRPC HTTP handler
-│   ├── globals.css                # Tailwind + theme tokens (OKLCH, dark-first)
+│   ├── globals.css                # Tailwind + OKLCH theme tokens
 │   ├── global-not-found.tsx       # Global 404
 │   ├── layout.tsx                 # Root layout, fonts, metadata
 │   ├── page.tsx                   # Home → WelcomeCard
-│   └── providers.tsx              # Theme, storage, audio, cursor providers
+│   └── providers.tsx              # Theme, storage, audio, scroll, Lenis, cursor
 ├── components/
 │   ├── ui/                        # shadcn/ui components
 │   ├── motion-primitives/
-│   │   └── cursor.tsx             # Custom cursor primitive
+│   │   ├── cursor.tsx             # Morphing cursor primitive
+│   │   └── text-scramble.tsx      # Scrambled text reveal on scroll
 │   ├── welcome-card.tsx           # Experience orchestrator
 │   ├── headphones-notice.tsx      # Session intro
 │   ├── on-boarding.tsx            # Terms / brand intro
 │   ├── landing.tsx                # Gate + LiquidMetal animation
-│   ├── main-experience.tsx        # Post-gate main content
-│   └── audio-controls.tsx         # Volume / mute UI
+│   ├── main-experience.tsx        # Snap-scrolled drop sections
+│   └── controls.tsx               # Theme, volume, and mute UI
 ├── context/
-│   ├── audio-provider.tsx         # In-memory audio state
-│   ├── cursor-provider.tsx        # Hover targets + morphing cursor
-│   ├── local-storage-provider.tsx # Onboarding + session flow persistence
-│   └── theme-provider.tsx         # next-themes wrapper
+│   ├── audio-provider.tsx         # Intro + background audio state
+│   ├── cursor-provider.tsx        # Hover targets for morphing cursor
+│   ├── lenis-provider.tsx         # Lenis smooth scroll + section snap
+│   ├── local-storage-provider.tsx # Onboarding + session flow state
+│   ├── scroll-container-provider.tsx # Main scroll container ref
+│   └── theme-provider.tsx         # next-themes wrapper + toggle helper
+├── hooks/
+│   └── use-mobile.ts              # Mobile breakpoint helper
+├── lib/
+│   └── utils.ts                   # `cn()` and shared utilities
 ├── public/
 │   ├── hex-logo.svg
 │   ├── gate-left.png / gate-right.png
 │   ├── shuriken.svg
-│   └── sounds/                    # intro-sound.ogg, background-sound.mp3
+│   └── sounds/                    # intro-sound.ogg, background-sound.ogg
 ├── utils/
 │   └── clipPaths.ts               # Cursor pointer clip-path polygon
 └── trpc/                          # Type-safe API (starter scaffold)
@@ -108,31 +94,14 @@ hextermina/
 
 Path alias `@/*` maps to the project root.
 
-## Persistence keys
-
-| Key | Storage | Purpose |
-| --- | --- | --- |
-| `hextermina:has-completed-onboarding` | `localStorage` | User agreed to terms |
-| `hextermina:session-has-seen-headphones` | `sessionStorage` | Headphones notice shown this session |
-| `hextermina:session-experience-state` | `sessionStorage` | Current step: `landing`, `entering`, or `main` |
-
-Audio volume/mute is **not** persisted — it resets each visit.
-
-## Custom cursor
-
-The global cursor is hidden; a DOM-based cursor follows the pointer and morphs between:
-
-- **Default** — small circle
-- **Hover (button/link)** — pointer shape (`cursorPath` in `utils/clipPaths.ts`)
-- **Tooltip** — pill with optional label content via `useCursorHover()`
-
-Registered in `app/providers.tsx` → `CursorProvider` + `MorphingCursor`.
-
 ## Theming
 
-Dark mode is the primary look. Theme tokens live in `app/globals.css` (OKLCH). Use semantic classes (`bg-background`, `text-foreground`, `text-muted-foreground`) so UI stays consistent across light/dark.
+Dark mode is the primary look. Theme tokens live in `app/globals.css` as OKLCH CSS variables, wired into Tailwind via `@theme inline`. Use semantic classes (`bg-background`, `text-foreground`, `text-muted-foreground`) so UI stays consistent across light and dark.
 
-Fonts: **Oxanium** for headings (`font-heading`), **Inter** for body, **Geist Mono** for mono accents.
+- **Default:** `next-themes` with `attribute="class"`; the root `Providers` wrapper sets `defaultTheme="system"`.
+- **Toggle:** fixed controls in `components/controls.tsx` (top-right).
+- **Fonts:** **Oxanium** for headings (`font-heading`), **Inter** for body (`font-sans`), **Geist Mono** for mono accents (`font-mono`).
+- **shadcn preset:** `base-luma` style with a neutral base palette (`components.json`).
 
 ## tRPC
 

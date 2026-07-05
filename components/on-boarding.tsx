@@ -52,10 +52,11 @@ export function OnBoarding({ onClick }: Props) {
         <CardFooter>
           <Button
             onClick={() => {
-              if (isMuteLockedByDefault) return
-              handleVolume(50)
-              playClickSound()
-              playBackgroundSound()
+              if (!isMuteLockedByDefault) {
+                handleVolume(50)
+                playClickSound()
+                playBackgroundSound()
+              }
               onClick()
             }}
             className={"ml-auto"}
