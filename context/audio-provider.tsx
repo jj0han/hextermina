@@ -10,11 +10,18 @@ import {
   useState,
 } from "react"
 
+import {
+  readLocalStorageItem,
+  STORAGE_KEYS,
+  writeLocalStorageItem,
+} from "./local-storage-provider"
+
 type AudioContextProps = {
   volume: number
   handleVolume: (value: number) => void
   isMuted: boolean
   setIsMuted: Dispatch<SetStateAction<boolean>>
+  isMuteLockedByDefault: boolean
   playBackgroundSound: () => void
   playClickSound: () => void
 }
@@ -26,6 +33,8 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const bgAudioRef = useRef<HTMLAudioElement | null>(null)
   const [volume, setVolume] = useState(0)
   const [isMuted, setIsMuted] = useState(true)
+  const isMuteLockedByDefault =
+    readLocalStorageItem(STORAGE_KEYS.isMuted) === "true" // track muted state in local storage
 
   function playBackgroundSound() {
     if (!bgAudioRef.current) return
@@ -53,6 +62,12 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       element.muted = isMuted
       element.volume = volume / 100
     }
+
+    if (volume <= 0) {
+      writeLocalStorageItem(STORAGE_KEYS.isMuted, "true")
+    } else {
+      writeLocalStorageItem(STORAGE_KEYS.isMuted, "false")
+    }
   }, [volume, isMuted])
 
   return (
@@ -62,6 +77,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
         handleVolume,
         isMuted,
         setIsMuted,
+        isMuteLockedByDefault,
         playBackgroundSound,
         playClickSound,
       }}

@@ -18,7 +18,12 @@ type Props = {
 
 export function OnBoarding({ onClick }: Props) {
   const shouldReduceMotion = useReducedMotion()
-  const { handleVolume, playClickSound, playBackgroundSound } = useAudio()
+  const {
+    handleVolume,
+    playClickSound,
+    playBackgroundSound,
+    isMuteLockedByDefault,
+  } = useAudio()
   return (
     <motion.div
       initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
@@ -47,6 +52,7 @@ export function OnBoarding({ onClick }: Props) {
         <CardFooter>
           <Button
             onClick={() => {
+              if (isMuteLockedByDefault) return
               handleVolume(50)
               playClickSound()
               playBackgroundSound()

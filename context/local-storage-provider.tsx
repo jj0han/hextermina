@@ -17,8 +17,9 @@ type LocalStorageContextProps = {
   setExperienceState: Dispatch<SetStateAction<ExperienceState>>
 }
 
-const STORAGE_KEYS = {
+export const STORAGE_KEYS = {
   hasCompletedOnboarding: "hextermina:has-completed-onboarding",
+  isMuted: "hextermina:is-muted",
 } as const
 
 const SESSION_STORAGE_KEYS = {
@@ -157,6 +158,26 @@ function readHasSeenHeadphones() {
 
 function isOnboardingCompleteState(value: ExperienceState) {
   return EXPERIENCE_STATES.has(value) && SESSION_EXPERIENCE_STATES.has(value)
+}
+
+export function readLocalStorageItem(key: string) {
+  if (typeof window === "undefined") return
+  try {
+    return localStorage.getItem(key)
+  } catch {
+    // Storage can fail in private mode or when quota is exceeded.
+    return null
+  }
+}
+
+export function writeLocalStorageItem(key: string, value: string) {
+  if (typeof window === "undefined") return
+  try {
+    localStorage.setItem(key, value)
+  } catch {
+    // Storage can fail in private mode or when quota is exceeded.
+    return null
+  }
 }
 
 function writeStorageItem(key: string, value: string) {

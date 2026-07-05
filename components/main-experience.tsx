@@ -15,7 +15,6 @@ import {
   useSpring,
   useTransform,
 } from "motion/react"
-import Image from "next/image"
 import Link from "next/link"
 import { useMemo, useRef } from "react"
 
@@ -66,11 +65,11 @@ export function MainExperience({ shouldReduceMotion }: MainExperienceProps) {
   })
 
   return (
-    <div className="flex overflow-hidden">
+    <div className="flex w-full overflow-hidden">
       <ShurikenBackdrop shouldReduceMotion={shouldReduceMotion} />
       <div
         ref={scrollRef as React.RefObject<HTMLDivElement>}
-        className="no-scrollbar min-w-0 scrollbar-none overflow-x-hidden overflow-y-scroll"
+        className="no-scrollbar w-full max-w-6xl min-w-0 scrollbar-none overflow-x-hidden overflow-y-scroll"
       >
         <div data-lenis-content>
           {MAIN_SECTIONS.map((section, index) => (
@@ -119,20 +118,19 @@ function ShurikenBackdrop({
   })
 
   return (
-    <motion.div
-      style={{ rotate: shouldReduceMotion ? 0 : smoothRotate }}
-      className="pointer-events-none h-full w-1/2 max-w-2xl"
-      aria-hidden
-    >
-      <Image
-        alt=""
-        width={300}
-        height={300}
-        src="/shuriken.svg"
-        fetchPriority="high"
-        loading="eager"
-        className="h-full w-full opacity-3 invert select-none dark:invert-0"
-      />
+    <motion.div className="pointer-events-none h-full w-1/3" aria-hidden>
+      <div className="relative h-full w-full">
+        <motion.img
+          style={{ rotate: shouldReduceMotion ? 0 : smoothRotate }}
+          alt=""
+          width={300}
+          height={300}
+          src="/shuriken.svg"
+          fetchPriority="high"
+          loading="eager"
+          className="absolute -left-1/2 h-full w-full overflow-visible object-cover opacity-3 invert select-none dark:invert-0"
+        />
+      </div>
     </motion.div>
   )
 }
@@ -191,7 +189,7 @@ function MainSection({
           opacity,
           filter: useMotionTemplate`blur(${smoothBlur}px)`,
         }}
-        className="flex w-full max-w-6xl min-w-0 flex-col gap-8 p-4"
+        className="flex w-full min-w-0 flex-col gap-8 p-4"
       >
         <TypographyMuted className="font-mono text-xs tracking-[0.4em] uppercase">
           <TextScramble as="label" duration={1.5}>
@@ -276,7 +274,7 @@ function GithubSection({
           opacity,
           filter: useMotionTemplate`blur(${smoothBlur}px)`,
         }}
-        className="ml-auto flex w-full max-w-6xl min-w-0 flex-col gap-8 p-4 md:pr-[clamp(1.5rem,8vw,4rem)]"
+        className="ml-auto flex w-full min-w-0 flex-col gap-8 p-4 md:pr-[clamp(1.5rem,8vw,4rem)]"
       >
         <div className="space-y-4">
           <TypographyH1>Hi,</TypographyH1>
