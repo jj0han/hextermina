@@ -19,7 +19,12 @@ export function WelcomeCard() {
 
   const { scrollTo } = useLenis()
 
-  const { handleVolume, playClickSound, playBackgroundSound } = useAudio()
+  const {
+    handleVolume,
+    playClickSound,
+    playBackgroundSound,
+    isMuteLockedByDefault,
+  } = useAudio()
   const {
     experienceState,
     hasCompletedOnboarding,
@@ -49,9 +54,11 @@ export function WelcomeCard() {
 
   function startEnterAnimation() {
     if (!isLanding) return
-    handleVolume(50)
-    playClickSound()
-    playBackgroundSound()
+    if (!isMuteLockedByDefault) {
+      handleVolume(50)
+      playClickSound()
+      playBackgroundSound()
+    }
     setExperienceState(shouldReduceMotion ? "main" : "entering")
   }
 
