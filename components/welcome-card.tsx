@@ -7,7 +7,7 @@ import { useLenis, useLenisActivation } from "@/context/lenis-provider"
 import { useLocalStorageState } from "@/context/local-storage-provider"
 import { cn } from "@/lib/utils"
 
-import { Controls } from "./controls"
+import Header from "./header"
 import { HeadphonesNotice } from "./headphones-notice"
 import { Landing } from "./landing"
 import { MainExperience } from "./main-experience"
@@ -73,7 +73,7 @@ export function WelcomeCard() {
       )}
       onClick={startEnterAnimation}
     >
-      {mounted && <Controls />}
+      {showMainLayout && <Header />}
       {mounted && isHydrated ? (
         <AnimatePresence mode="wait">
           {isMain ? (

@@ -74,9 +74,11 @@ export function Cursor({
     }
 
     document.addEventListener("mousemove", updatePosition)
+    document.addEventListener("mouseover", updatePosition)
 
     return () => {
       document.removeEventListener("mousemove", updatePosition)
+      document.removeEventListener("mouseover", updatePosition)
     }
   }, [cursorX, cursorY, onPositionChangeAction, attachToParent])
 
@@ -123,7 +125,10 @@ export function Cursor({
   return (
     <motion.div
       ref={cursorRef}
-      className={cn("pointer-events-none fixed top-0 left-0 z-50", className)}
+      className={cn(
+        "pointer-events-none fixed top-0 left-0 z-2147483647",
+        className
+      )}
       style={{
         x: cursorXSpring,
         y: cursorYSpring,

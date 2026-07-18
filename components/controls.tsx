@@ -10,19 +10,20 @@ import { HugeiconsIcon } from "@hugeicons/react"
 
 import { useAudio } from "@/context/audio-provider"
 import { useThemeToggle } from "@/context/theme-provider"
+import { cn } from "@/lib/utils"
 
 import { Button, buttonVariants } from "./ui/button"
 import { ButtonGroup } from "./ui/button-group"
 import { Label } from "./ui/label"
 import { Slider } from "./ui/slider"
 
-export function Controls() {
+export function Controls({ className }: { className?: string }) {
   const { volume, handleVolume, isMuted, playClickSound, playBackgroundSound } =
     useAudio()
   const { isDark, toggleTheme } = useThemeToggle({ variant: "polygon" })
 
   return (
-    <ButtonGroup className="pointer-events-auto fixed top-4 right-4 z-40 flex gap-2">
+    <ButtonGroup className={cn("pointer-events-auto flex gap-2", className)}>
       <ButtonGroup>
         <Button
           title="Toggle theme"
