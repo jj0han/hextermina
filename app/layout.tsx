@@ -1,9 +1,9 @@
 import "./globals.css"
 
+import { cn } from "cn"
 import type { Metadata } from "next"
 import { Geist_Mono, Inter, Oxanium } from "next/font/google"
 
-import { cn } from "@/lib/utils"
 import { TRPCReactProvider } from "@/trpc/client"
 
 import Providers from "./providers"

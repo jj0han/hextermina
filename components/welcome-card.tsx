@@ -1,11 +1,11 @@
 "use client"
+import { cn } from "cn"
 import { AnimatePresence, useReducedMotion } from "motion/react"
 import { useCallback, useEffect, useState } from "react"
 
 import { useAudio } from "@/context/audio-provider"
 import { useLenis, useLenisActivation } from "@/context/lenis-provider"
 import { useLocalStorageState } from "@/context/local-storage-provider"
-import { cn } from "@/lib/utils"
 
 import Header from "./header"
 import { HeadphonesNotice } from "./headphones-notice"

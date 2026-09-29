@@ -8,9 +8,8 @@ import {
   UnfoldMoreIcon,
 } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
+import { cn } from "cn"
 import * as React from "react"
-
-import { cn } from "@/lib/utils"
 
 const Select = SelectPrimitive.Root
 

@@ -1,4 +1,5 @@
 "use client"
+import { cn } from "cn"
 import type { SpringOptions, Transition, Variant } from "motion/react"
 import {
   AnimatePresence,
@@ -10,7 +11,6 @@ import type { Dispatch, RefObject, SetStateAction } from "react"
 import React, { useEffect, useRef, useState } from "react"
 
 import { useCursor } from "@/context/cursor-provider"
-import { cn } from "@/lib/utils"
 
 export const handlePositionChange = (
   ref: RefObject<HTMLDivElement | null>,

@@ -7,10 +7,10 @@ import {
   VolumeMute02Icon,
 } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
+import { cn } from "cn"
 
 import { useAudio } from "@/context/audio-provider"
 import { useThemeToggle } from "@/context/theme-provider"
-import { cn } from "@/lib/utils"
 
 import { Button, buttonVariants } from "./ui/button"
 import { ButtonGroup } from "./ui/button-group"

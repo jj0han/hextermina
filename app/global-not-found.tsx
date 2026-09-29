@@ -3,6 +3,7 @@ import "./globals.css"
 
 import { RouteBlockIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
+import { cn } from "cn"
 import type { Metadata } from "next"
 import { Geist_Mono, Inter, Oxanium } from "next/font/google"
 
@@ -16,7 +17,6 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 import { ThemeProvider } from "@/context/theme-provider"
-import { cn } from "@/lib/utils"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
